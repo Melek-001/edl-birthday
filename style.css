@@ -816,9 +816,16 @@ body {
         width: 95%;
     }
 
-    /* 3. Paradise: Scale down elements */
+    /* 3. Paradise: Scale down elements & Boost Pink Vibe */
+    #paradise {
+        /* Make gradient more vibrant on mobile (less washed out) */
+        background: linear-gradient(180deg, #ffb7c5 0%, #ff9a9e 100%);
+    }
+
     .paradise-content h1 {
         font-size: 1.8rem;
+        text-shadow: 0 2px 4px rgba(255, 105, 180, 0.3);
+        /* Pink shadow */
     }
 
     .plane-body {
