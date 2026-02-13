@@ -19,6 +19,17 @@ body {
     background-color: var(--bg-black);
     color: var(--text-white);
     height: 100vh;
+
+    /* Privacy: Prevent Selection */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Prevent Image Dragging */
+img {
+    pointer-events: none;
 }
 
 /* Utilities */

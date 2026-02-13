@@ -368,5 +368,19 @@ function confettiRain() {
     fire(0.1, { spread: 120, startVelocity: 45, });
 }
 
+// ==========================
+// Privacy / Anti-Copy protection
+// ==========================
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+document.addEventListener('keydown', function (e) {
+    // Prevent F12, Ctrl+U, Ctrl+S
+    if (e.key === 'F12' ||
+        (e.ctrlKey && (e.key === 'u' || e.key === 's')) ||
+        (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+        e.preventDefault();
+    }
+});
+
 // Start
 init();
