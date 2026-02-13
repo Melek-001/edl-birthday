@@ -788,19 +788,89 @@ body {
     animation: flicker 0.1s infinite alternate;
 }
 
-.blow-btn {
-    padding: 15px 40px;
-    background: #6c5ce7;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: 0.3s;
-}
-
 .blow-btn:hover {
     background: #564ab9;
     transform: scale(1.1);
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS (iPhone & Android)
+   ========================================= */
+@media (max-width: 768px) {
+
+    /* 1. Landing adjustments */
+    #landing-text {
+        font-size: 1.1rem;
+        padding: 0 20px;
+    }
+
+    /* 2. Quiz: Stack options vertically */
+    .options-grid {
+        grid-template-columns: 1fr;
+        /* Stack buttons */
+        gap: 10px;
+    }
+
+    .quiz-container {
+        padding: 1rem;
+        width: 95%;
+    }
+
+    /* 3. Paradise: Scale down elements */
+    .paradise-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .plane-body {
+        font-size: 3rem;
+        /* Smaller plane */
+    }
+
+    .island {
+        font-size: 6rem;
+        /* Smaller island */
+    }
+
+    .island-container {
+        bottom: 15%;
+        /* Adjust for mobile screen height */
+        height: 200px;
+    }
+
+    /* 4. Letter Popup: Maximize width */
+    .letter-content {
+        width: 95%;
+        padding: 1.5rem;
+        height: 70vh;
+    }
+
+    /* 5. CTA: Full width buttons */
+    .cta-container h2 {
+        font-size: 1.5rem;
+        padding: 0 10px;
+    }
+
+    .cta-btn,
+    .finish-btn {
+        width: 80%;
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+
+    /* 6. Cake Section */
+    .cake {
+        transform: scale(0.8);
+        /* Shrink cake slightly */
+        margin: 30px auto;
+    }
+
+    .reveal-img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .final-typewriter {
+        font-size: 1.5rem;
+        padding: 0 10px;
+    }
 }
