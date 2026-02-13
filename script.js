@@ -104,6 +104,22 @@ function init() {
     typeWriter(elements.landingText, hookText, 60, () => {
         elements.proveBtn.classList.remove('hidden');
         elements.proveBtn.classList.add('visible');
+
+        // Show Music Button too
+        const playBtn = document.getElementById('play-music-btn');
+        if (playBtn) {
+            playBtn.classList.remove('hidden');
+            playBtn.classList.add('visible');
+
+            playBtn.addEventListener('click', () => {
+                const audio = document.getElementById('bg-music');
+                audio.play().then(() => {
+                    playBtn.innerHTML = "🎵 Playing...";
+                    playBtn.style.opacity = "0.5";
+                    playBtn.style.pointerEvents = "none";
+                }).catch(e => console.log("Audio play failed:", e));
+            });
+        }
     });
 
     elements.proveBtn.addEventListener('click', () => {
