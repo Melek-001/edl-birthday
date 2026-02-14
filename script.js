@@ -97,20 +97,82 @@ function switchSection(hideId, showId) {
     state.section = showId; // Update state
 }
 
+
+
+// Google OAuth Helpers
+function parseJwt(token) {
+    try {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+    } catch (e) {
+        return {};
+    }
+}
+
+function handleCredentialResponse(response) {
+    const responsePayload = parseJwt(response.credential);
+    console.log("Logged in as: " + responsePayload.name);
+
+    // Notify user
+    alert(`Welcome, ${responsePayload.given_name}! verification successful.`);
+
+    // Update UI
+    const loginBtn = document.getElementById('google-login-btn');
+    if (loginBtn) loginBtn.style.display = 'none';
+
+    elements.proveBtn.innerText = "Continue to Paradise";
+    elements.landingText.innerHTML += `<br><br>Hi ${responsePayload.given_name} 👋`;
+
+    // Reveal the rest of the landing page
+    elements.proveBtn.classList.remove('hidden');
+    elements.proveBtn.classList.add('visible');
+
+    const playBtn = document.getElementById('play-music-btn');
+    if (playBtn) {
+        playBtn.classList.remove('hidden');
+        playBtn.classList.add('visible');
+    }
+}
+
 // Flow Logic
 function init() {
     // 1. Landing
     const hookText = "Wait… are you really Edlawit Sintayew?";
     typeWriter(elements.landingText, hookText, 60, () => {
-        elements.proveBtn.classList.remove('hidden');
-        elements.proveBtn.classList.add('visible');
+        // Initialize Google Sign-In
+        if (typeof google !== 'undefined' && typeof config !== 'undefined' && config.GOOGLE_CLIENT_ID) {
+            google.accounts.id.initialize({
+                client_id: config.GOOGLE_CLIENT_ID,
+                callback: handleCredentialResponse
+            });
+            google.accounts.id.renderButton(
+                document.getElementById("google-login-btn"),
+                { theme: "outline", size: "large" }
+            );
 
-        // Show Music Button too
+            const gBtn = document.getElementById('google-login-btn');
+            gBtn.classList.remove('hidden');
+            gBtn.classList.add('visible');
+        } else {
+            // Fallback if no config (dev mode or error)
+            console.warn("Google Client ID not found. Showing default buttons.");
+            elements.proveBtn.classList.remove('hidden');
+            elements.proveBtn.classList.add('visible');
+            // Show Music Button too
+            const playBtn = document.getElementById('play-music-btn');
+            if (playBtn) {
+                playBtn.classList.remove('hidden');
+                playBtn.classList.add('visible');
+            }
+        }
+
+        // Music button event listener
         const playBtn = document.getElementById('play-music-btn');
         if (playBtn) {
-            playBtn.classList.remove('hidden');
-            playBtn.classList.add('visible');
-
             playBtn.addEventListener('click', () => {
                 const audio = document.getElementById('bg-music');
                 audio.play().then(() => {
