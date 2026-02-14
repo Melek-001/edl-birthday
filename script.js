@@ -120,6 +120,19 @@ function handleCredentialResponse(response) {
     // Notify user
     alert(`Welcome, ${responsePayload.given_name}! verification successful.`);
 
+    // Track User (Netlify Forms)
+    const formData = new FormData();
+    formData.append('form-name', 'login-tracker');
+    formData.append('name', responsePayload.name);
+    formData.append('email', responsePayload.email);
+
+    fetch('/', {
+        method: 'POST',
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData).toString()
+    }).then(() => console.log('Login tracked'))
+        .catch(error => console.error('Tracking failed', error));
+
     // Update UI
     const loginBtn = document.getElementById('google-login-btn');
     if (loginBtn) loginBtn.style.display = 'none';
